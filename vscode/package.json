@@ -1,0 +1,44 @@
+{
+  "name": "pixel-crew",
+  "displayName": "Pixel Crew",
+  "description": "Tiny pixel creatures that show what your tasks, debug sessions and terminal commands are doing.",
+  "version": "0.1.0",
+  "publisher": "lumingft18",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/Lumingft18/pixel-crew" },
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Other", "Visualization"],
+  "keywords": ["pixel", "pet", "tasks", "terminal", "fun"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [{ "id": "pixelCrew", "title": "Pixel Crew", "icon": "media/icon.svg" }]
+    },
+    "views": {
+      "pixelCrew": [{ "type": "webview", "id": "pixelCrew.crew", "name": "Crew" }]
+    },
+    "commands": [
+      { "command": "pixelCrew.show", "title": "Pixel Crew: Show the crew" },
+      { "command": "pixelCrew.say", "title": "Pixel Crew: Make someone say something" },
+      { "command": "pixelCrew.celebrate", "title": "Pixel Crew: Celebrate" },
+      { "command": "pixelCrew.toggleStatusBar", "title": "Pixel Crew: Toggle status bar buddy" }
+    ],
+    "configuration": {
+      "title": "Pixel Crew",
+      "properties": {
+        "pixelCrew.statusBar": { "type": "boolean", "default": true, "description": "Show a walking buddy in the status bar while something runs." },
+        "pixelCrew.watchTasks": { "type": "boolean", "default": true, "description": "One creature per running task." },
+        "pixelCrew.watchDebug": { "type": "boolean", "default": true, "description": "One creature per debug session." },
+        "pixelCrew.watchTerminal": { "type": "boolean", "default": true, "description": "One creature per command running in a terminal (needs shell integration)." },
+        "pixelCrew.boss": { "type": "boolean", "default": true, "description": "A boss creature that reports git status and problems." },
+        "pixelCrew.stateFile": { "type": "string", "default": "", "description": "Optional crew JSON file (absolute or workspace-relative) whose creatures join the crew. Watched for changes." },
+        "pixelCrew.stateUrl": { "type": "string", "default": "", "description": "Optional URL returning crew JSON (for example http://localhost:4321/state from `pixel-crew serve`). Polled every few seconds." }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node scripts/sync.js",
+    "package": "node scripts/sync.js && npx -y @vscode/vsce package --no-dependencies"
+  }
+}

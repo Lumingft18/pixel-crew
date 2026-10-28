@@ -59,6 +59,13 @@ station), `idle`, `boss`. Any other status works too, it just uses the idle line
 - stay inside the window, also after a resize;
 - respect "reduce motion".
 
+## VS Code, Cursor and friends
+
+There is an extension in [`vscode/`](vscode/): a sidebar crew with one creature per running task, debug session
+and terminal command, a boss that reports git and Problems, and a little buddy walking in the status bar.
+Grab the `.vsix` from the [releases](https://github.com/Lumingft18/pixel-crew/releases) and run
+`code --install-extension pixel-crew-0.1.0.vsix` (or `cursor --install-extension …`).
+
 ## Command line
 
 Requires Node 18+.
