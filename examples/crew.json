@@ -1,0 +1,11 @@
+{
+  "critters": [
+    { "id": "boss", "color": "#eab308", "status": "boss", "size": "big", "label": "orchestrator", "lines": ["3 jobs running", "next up: deploy"] },
+    { "id": "api", "color": "#d77757", "status": "working", "label": "api · refactor", "lines": ["moving the auth code", "12 minutes in"] },
+    { "id": "web", "color": "#3b82f6", "status": "fixing", "label": "web · fix", "lines": ["review found a bug, fixing"] },
+    { "id": "docs", "color": "#8b5cf6", "status": "queued", "label": "docs · approved" },
+    { "id": "ml", "color": "#22c55e", "status": "waiting", "label": "ml · out of quota" }
+  ],
+  "train": { "members": ["docs"] },
+  "env": { "paused": false, "offline": false, "hot": false }
+}

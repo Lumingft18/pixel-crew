@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pixel-crew</title>
+<style>
+  html, body { height: 100%; margin: 0; }
+  body { background: #f3f5f8; font: 14px -apple-system, system-ui, sans-serif; color: #0f172a; }
+  @media (prefers-color-scheme: dark) { body { background: #07090d; color: #e8ecf3; } }
+  .hint { position: fixed; left: 16px; bottom: 12px; opacity: .55; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="hint">pixel-crew · live from <code>/state</code></div>
+<script src="/pixel-crew.js"></script>
+<script>
+  const crew = PixelCrew.mount(document.body);
+  async function poll() {
+    try { crew.update(await (await fetch("/state", { cache: "no-store" })).json()); } catch {}
+  }
+  poll(); setInterval(poll, 1500);
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pixel-crew demo</title>
+<style>
+  :root { color-scheme: light dark; }
+  html, body { height: 100%; margin: 0; }
+  body { background: #f3f5f8; color: #0f172a; font: 14px/1.5 -apple-system, system-ui, sans-serif; }
+  @media (prefers-color-scheme: dark) { body { background: #07090d; color: #e8ecf3; } }
+  header { padding: 18px 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  h1 { font-size: 18px; margin: 0 12px 0 0; }
+  button { font: inherit; padding: 6px 12px; border-radius: 9px; border: 1px solid rgba(127,127,127,.4); background: transparent; color: inherit; cursor: pointer; }
+  p { margin: 0 20px; opacity: .65; max-width: 640px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>pixel-crew</h1>
+  <button id="add">+ job</button>
+  <button id="train">board the train</button>
+  <button id="red">red train</button>
+  <button id="ok">success</button>
+  <button id="pause">pause</button>
+  <button id="hot">hot machine</button>
+  <button id="offline">offline</button>
+</header>
+<p>Hover to see what they are doing, drag them around, double-click to make them dance, move the mouse fast to scare them.</p>
+<script src="src/pixel-crew.js"></script>
+<script>
+  const colors = ["#d77757", "#3b82f6", "#22c55e", "#8b5cf6", "#f59e0b", "#e8e8e8", "#ec4899"];
+  const statuses = ["working", "fixing", "reviewing", "queued", "idle", "waiting"];
+  let n = 0;
+  const state = { critters: [{ id: "boss", color: "#eab308", status: "boss", size: "big", label: "orchestrator" }], env: {}, train: { members: [] } };
+  const add = () => { n++; state.critters.push({ id: "job" + n, color: colors[(n - 1) % colors.length], status: statuses[n % statuses.length], label: "job #" + n }); };
+  for (let i = 0; i < 6; i++) add();
+  const crew = PixelCrew.mount(document.body, { top: 70 });
+  const push = () => crew.update(state);
+  push();
+  const $ = id => document.getElementById(id);
+  $("add").onclick = () => { add(); push(); };
+  $("train").onclick = () => {
+    const riders = state.critters.filter(c => c.status === "queued").map(c => c.id);
+    state.train = { members: riders.length ? riders : [state.critters[1].id] }; push();
+    setTimeout(() => { state.train = { members: [], say: "merged! 🎉" }; push(); }, 9000);
+  };
+  $("red").onclick = () => crew.event({ kind: "red", text: "tests failed on the train", ids: state.train.members || [] });
+  $("ok").onclick = () => crew.event({ kind: "ok", text: "deployed 🚀", ids: state.critters.map(c => c.id) });
+  for (const k of ["pause", "hot", "offline"]) $(k).onclick = () => {
+    const key = k === "pause" ? "paused" : k;
+    state.env = { ...state.env, [key]: !state.env[key], temp: 92 }; push();
+    $(k).style.fontWeight = state.env[key] ? "700" : "";
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "pixel-crew",
+  "version": "0.1.0",
+  "description": "Tiny pixel creatures that wander around your page or terminal and show what your jobs are doing.",
+  "main": "src/pixel-crew.js",
+  "bin": { "pixel-crew": "bin/pixel-crew.mjs" },
+  "files": ["src", "bin", "examples", "index.html"],
+  "engines": { "node": ">=18" },
+  "keywords": ["pixel-art", "mascot", "dashboard", "cli", "terminal", "animation", "ci", "agents"],
+  "author": "Alessandro Rutigliano",
+  "license": "MIT"
+}
